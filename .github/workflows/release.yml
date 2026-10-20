@@ -12,9 +12,6 @@ on:
         description: "Release tag (for example v0.1.0)"
         required: true
         default: "v0.1.0"
-  push:
-    tags:
-      - "v*"
 
 permissions:
   contents: write
