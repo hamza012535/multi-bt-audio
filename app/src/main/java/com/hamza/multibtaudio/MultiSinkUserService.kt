@@ -49,7 +49,8 @@ class MultiSinkUserService(private val suppliedContext: Context? = null) : IMult
             val strategy = mediaStrategy(strategyClass) ?: return "BLOCKED_API: media audio strategy unavailable on this vendor build."
             val attributesClass = Class.forName("android.media.AudioDeviceAttributes")
             val constructor = attributesClass.getConstructor(Int::class.javaPrimitiveType, Int::class.javaPrimitiveType, String::class.java)
-            val requested = chosen.map { constructor.newInstance(AudioDeviceInfo.ROLE_OUTPUT, it.type, it.address) }
+            val outputRole = attributesClass.getField("ROLE_OUTPUT").getInt(null)
+            val requested = chosen.map { constructor.newInstance(outputRole, it.type, it.address) }
             val method = AudioManager::class.java.getMethod("setPreferredDevicesForStrategy", strategyClass, List::class.java)
             val accepted = method.invoke(manager, strategy, requested) as? Boolean ?: false
             if (accepted) "ROUTING_REQUEST_ACCEPTED: requested ${chosen.size} outputs; verify audible playback on both."
