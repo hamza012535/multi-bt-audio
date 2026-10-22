@@ -64,7 +64,11 @@ class MultiSinkRoutingService : Service() {
                 .tag("multi-bt-audio-routing").version(1).daemon(false)
             Shizuku.bindUserService(args, conn)
             bound = true
-        } catch (t: Throwable) {\n            bound = false\n            val cause = t.cause ?: t\n            saveStatus("Shizuku bind failed: ${cause.javaClass.simpleName}: ${cause.message ?: \"no details\"}")\n        }
+        } catch (t: Throwable) {
+            bound = false
+            val cause = t.cause ?: t
+            saveStatus("Shizuku bind failed: ${cause.javaClass.simpleName}: ${cause.message ?: "no details"}")
+        }
     }
 
     private fun applyRoute() {
