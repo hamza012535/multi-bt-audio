@@ -33,7 +33,7 @@ class MultiSinkRoutingService : Service() {
             remote = IMultiSinkControl.Stub.asInterface(service)
             applyRoute()
         }
-        override fun onServiceDisconnected(name: ComponentName?) { remote = null }
+        override fun onServiceDisconnected(name: ComponentName?) { remote = null; bound = false }
     }
     private val callback = object : AudioDeviceCallback() {
         override fun onAudioDevicesAdded(addedDevices: Array<out AudioDeviceInfo>) { handler.postDelayed({ applyRoute() }, 900) }
