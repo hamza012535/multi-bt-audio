@@ -62,7 +62,8 @@ class MultiSinkRoutingService : Service() {
         try {
             val args = Shizuku.UserServiceArgs(ComponentName(this, MultiSinkUserService::class.java))
                 .tag("multi-bt-audio-routing").version(1).daemon(false)
-            bound = Shizuku.bindUserService(args, conn)
+            Shizuku.bindUserService(args, conn)
+            bound = true
         } catch (_: Throwable) { saveStatus("Shizuku user-service binding failed. Check Shizuku status and authorization.") }
     }
 
