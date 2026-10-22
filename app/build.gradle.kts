@@ -28,7 +28,13 @@ android {
     }
     buildTypes {
         getByName("release") {
-            if (!System.getenv("ANDROID_KEYSTORE_PATH").isNullOrBlank()) signingConfig = signingConfigs.getByName("release")
+            // Use the supplied release keystore when configured; otherwise produce
+            // an installable test APK signed with the standard debug key.
+            signingConfig = if (!System.getenv("ANDROID_KEYSTORE_PATH").isNullOrBlank()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = false
         }
     }
