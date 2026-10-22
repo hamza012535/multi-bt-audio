@@ -61,7 +61,7 @@ class MultiSinkRoutingService : Service() {
         if (bound) return
         try {
             val args = Shizuku.UserServiceArgs(ComponentName(this, MultiSinkUserService::class.java))
-                .tag("multi-bt-audio-routing").version(1).daemon(false)
+                .tag("multi-bt-audio-routing").processNameSuffix("routing").version(1).daemon(false)
             Shizuku.bindUserService(args, conn)
             bound = true
         } catch (t: Throwable) {
@@ -108,7 +108,7 @@ class MultiSinkRoutingService : Service() {
         try { unregisterReceiver(receiver) } catch (_: Exception) {}
         if (bound) try {
             val args = Shizuku.UserServiceArgs(ComponentName(this, MultiSinkUserService::class.java))
-                .tag("multi-bt-audio-routing").version(1).daemon(false)
+                .tag("multi-bt-audio-routing").processNameSuffix("routing").version(1).daemon(false)
             Shizuku.unbindUserService(args, conn, true)
         } catch (_: Throwable) {}
         super.onDestroy()
