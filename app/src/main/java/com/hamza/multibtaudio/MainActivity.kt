@@ -99,7 +99,7 @@ class MainActivity : Activity() {
         startForegroundService(Intent(this, MultiSinkRoutingService::class.java))
         toggle.text = "Multi-Speaker Enabled (tap to stop)"
         toggle.setOnClickListener {
-            stopService(Intent(this, MultiSinkRoutingService::class.java))
+            startService(Intent(this, MultiSinkRoutingService::class.java).setAction(MultiSinkRoutingService.ACTION_STOP))
             toggle.text = "Enable Multi-Speaker"
             toggle.setOnClickListener { toggleRouting() }
             statusText.text = "Routing service stopped."
