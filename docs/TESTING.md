@@ -39,3 +39,11 @@ This development session has no connected Tecno Spark 10 Pro. Neither CI success
 - `WAITING_OUTPUTS`: fewer than two selected speakers are exposed as connected outputs.
 
 Only mark this feature hardware-verified after audible playback testing on the target phone. A green CI build proves compilation only.
+
+
+## CI artifact and release pipeline
+
+- Debug APK: repository Actions tab, workflow **Android CI**, artifact **android-debug-apk**.
+- Android release: push a tag such as `android-v0.2.0`; workflow `.github/workflows/android-release.yml` publishes the APK and `SHA256SUMS.txt`.
+- The repository already had a Windows `release.yml`; it is preserved to avoid breaking that pipeline. Android release has a separate workflow name.
+- For a production signing key, configure repository Actions secrets: `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, and `ANDROID_KEY_PASSWORD`. Without these, the release variant is signed with the standard debug key for test installation only.
